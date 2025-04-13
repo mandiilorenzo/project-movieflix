@@ -51,30 +51,56 @@ app.post("/movies", async (req, res) => {
 
 app.put("/movies/:id", async (req, res) => {
     const id = Number(req.params.id);
-    
+
     try {
-    const movieUndefined = await prisma.movie.findUnique({
-        where: {
-            id
+        const movieUndefined = await prisma.movie.findUnique({
+            where: {
+                id
+            }
+        });
+        if (!movieUndefined) {
+            res.status(404).send({ message: "Filme não encontrado" });
         }
-    });
-    if (!movieUndefined) {
-        res.status(404).send({ message: "Filme não encontrado" });
+
+        const data = { ...req.body };
+        data.release_date = data.release_date ? new Date(data.release_date) : undefined;
+
+        await prisma.movie.update({
+            where: {
+                id
+            },
+            data: data
+        });
+    } catch (error) {
+        res.status(500).send({ message: "Falha ao atualizar o filme" });
+        console.log(error);
     }
 
-    const data = { ...req.body };
-    data.release_date = data.release_date ? new Date(data.release_date) : undefined;
+    res.status(200).send();
+});
 
-    await prisma.movie.update({
-        where: {
-            id
-        },
-        data: data
-    });
-} catch (error) {
-    res.status(500).send({ message: "Falha ao atualizar o filme" });
-    console.log(error);
-}
+app.delete("/movies/:id", async (req, res) => {
+    const id = Number(req.params.id);
+
+    try {
+        const movieUndefined = await prisma.movie.findUnique({
+            where: {
+                id
+            }
+        });
+        if (!movieUndefined) {
+            res.status(404).send({ message: "Filme não encontrado" });
+        }
+
+        await prisma.movie.delete({
+            where: {
+                id
+            }
+        });
+    } catch (error) {
+        res.status(500).send({ message: "Falha ao deletar o filme" });
+        console.log(error);
+    }
 
     res.status(200).send();
 });
