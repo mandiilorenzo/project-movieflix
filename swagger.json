@@ -29,6 +29,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "Movie"
+                ],
                 "summary": "Adicionar um novo filme",
                 "requestBody": {
                     "required": true,
@@ -53,28 +56,10 @@
             }
         },
         "/movies/{id}": {
-            "get": {
-                "summary": "Buscar um filme por ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/MovieResponse"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/NotFoundResponse"
-                    }
-                }
-            },
             "put": {
+                "tags": [
+                    "Movie"
+                ],
                 "summary": "Atualizar um filme por ID",
                 "parameters": [
                     {
@@ -82,7 +67,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -90,20 +75,26 @@
                     "required": true,
                     "content": {
                         "application/json": {
-                            "$ref": "#/components/schemas/Movie"
+                            "$ref": "#/components/schemas/MovieInput"
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/MovieResponse"
+                        "$ref": "Filme atualizado com sucesso!"
                     },
                     "404": {
-                        "$ref": "#/components/responses/NotFoundResponse"
+                        "$ref": "Filme não encontrado"
+                    },
+                    "505": {
+                        "$ref": "Falha ao atualizar o filme"
                     }
                 }
             },
             "delete": {
+                "tags":[
+                    "Movie"
+                ],
                 "summary": "Deletar um filme por ID",
                 "parameters": [
                     {
@@ -111,7 +102,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -120,7 +111,10 @@
                         "description": "Filme deletado com sucesso"
                     },
                     "404": {
-                        "$ref": "#/components/responses/NotFoundResponse"
+                        "$ref": "Filme não encontrado"
+                    },
+                    "505": {
+                        "$ref": "Falha ao deletar o filme"
                     }
                 }
             }
@@ -137,16 +131,16 @@
                     },
                     "title": {
                         "type": "string",
-                        "example": "Título do filme"
+                        "description": "Título do filme"
                     },
                     "genre_id": {
                         "type": "string",
-                        "example": "Gênero do filme"
+                        "description": "Gênero do filme"
                     },
                     "releaseDate": {
                         "type": "string",
                         "format": "date",
-                        "example": "2001-12-19"
+                        "description": "Data de lançamento do filme"
                     },
                     "genres": {
                         "type": "object",
@@ -180,11 +174,44 @@
                     },
                     "oscar_count": {
                         "type": "integer",
-                        "example": "Quantidade de Oscars que o filme gannhou"
+                        "example": "Quantidade de Oscars que o filme ganhou"
                     }
                 },
                 "required": [
                     "id",
+                    "title",
+                    "genre_id",
+                    "releaseDate",
+                    "language_id",
+                    "oscar_count"
+                ]
+            },
+            "MovieInput": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Título do filme"
+                    },
+                    "genre_id": {
+                        "type": "integer",
+                        "description": "ID do gênero do filme"
+                    },
+                    "releaseDate": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Data de lançamento do filme"
+                    },
+                    "language_id": {
+                        "type": "integer",
+                        "description": "ID da lígua do filme"
+                    },
+                    "oscar_count": {
+                        "type": "integer",
+                        "description": "Quantidade de oscars que o filme ganhou"
+                    }
+                },
+                "required": [
                     "title",
                     "genre_id",
                     "releaseDate",
