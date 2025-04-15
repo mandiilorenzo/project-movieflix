@@ -1,0 +1,218 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Movieflix API",
+        "description": "API responsável por gerenciar os filmes do Movieflix",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/movies": {
+            "get": {
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "Listar todos os filmes",
+                "responses": {
+                    "200": {
+                        "description": "Lista de filmes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Adicionar um novo filme",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Movie"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Filme criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "$ref": "#/components/schemas/Movie"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/movies/{id}": {
+            "get": {
+                "summary": "Buscar um filme por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MovieResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualizar um filme por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "$ref": "#/components/schemas/Movie"
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MovieResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar um filme por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Filme deletado com sucesso"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Movie": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Título do filme"
+                    },
+                    "genre_id": {
+                        "type": "string",
+                        "example": "Gênero do filme"
+                    },
+                    "releaseDate": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2001-12-19"
+                    },
+                    "genres": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "description": "ID do gênero"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Nome do gênero"
+                            }
+                        }
+                    },
+                    "language_id": {
+                        "type": "string",
+                        "example": "Idioma do filme"
+                    },
+                    "languages": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "description": "ID da língua"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Nome da língua"
+                            }
+                        }
+                    },
+                    "oscar_count": {
+                        "type": "integer",
+                        "example": "Quantidade de Oscars que o filme gannhou"
+                    }
+                },
+                "required": [
+                    "id",
+                    "title",
+                    "genre_id",
+                    "releaseDate",
+                    "language_id",
+                    "oscar_count"
+                ]
+            }
+        },
+        "responses": {
+            "MovieResponse": {
+                "$ref": "#/components/schemas/Movie"
+            },
+            "NotFoundResponse": {
+                "description": "Filme não encontrado",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Filme não encontrado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
