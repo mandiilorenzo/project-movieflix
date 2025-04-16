@@ -1,0 +1,29 @@
+version:  '3.8'
+
+services:
+  movieflix-postgres:
+    image: postgres:15
+    container_name: movieflix-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: movieflix
+    volumes:
+      - ./data:/postgres:var/lib/postgresql/data
+
+  movieflix-dbeaver:
+    image: dbeaver/dbeaver-ce:latest
+    container_name: movieflix-dbeaver
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/dbeaver:/var/lib/dbeaver
+    environment:
+      - DBEAVER_DEFAULT_EMAIL=user@email.com
+      - DBEAVER_DEFAULT_PASSWORD=password
+    depends_on:
+      - movieflix-postgres
