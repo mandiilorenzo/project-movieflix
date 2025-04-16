@@ -152,6 +152,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -178,8 +182,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Genre {\n  id     Int     @id @default(autoincrement())\n  name   String? @db.VarChar(100)\n  movies Movie[]\n\n  @@map(\"genres\")\n}\n\nmodel language {\n  id     Int     @id @default(autoincrement())\n  name   String? @db.VarChar(100)\n  movies Movie[]\n\n  @@map(\"languages\")\n}\n\nmodel Movie {\n  id           Int       @id @default(autoincrement())\n  title        String?   @db.VarChar(100)\n  release_date DateTime? @db.Date\n  genre_id     Int?\n  language_id  Int?\n  oscar_count  Int?\n  genres       Genre?    @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: \"fk_genre\")\n  languages    language? @relation(fields: [language_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: \"fk_language\")\n\n  @@map(\"movies\")\n}\n",
-  "inlineSchemaHash": "aafd76d612935264ec1e74a55eef9cedd8f7e13f439079b2d907638f5290e37f",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Genre {\n  id     Int     @id @default(autoincrement())\n  name   String? @db.VarChar(100)\n  movies Movie[]\n\n  @@map(\"genres\")\n}\n\nmodel language {\n  id     Int     @id @default(autoincrement())\n  name   String? @db.VarChar(100)\n  movies Movie[]\n\n  @@map(\"languages\")\n}\n\nmodel Movie {\n  id           Int       @id @default(autoincrement())\n  title        String?   @db.VarChar(100)\n  release_date DateTime? @db.Date\n  genre_id     Int?\n  language_id  Int?\n  oscar_count  Int?\n  genres       Genre?    @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: \"fk_genre\")\n  languages    language? @relation(fields: [language_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: \"fk_language\")\n\n  @@map(\"movies\")\n}\n",
+  "inlineSchemaHash": "346a3e3a32142f24f44c4512612b4086dacfbb66e78d99c6d6cf9268f8d6a156",
   "copyEngine": true
 }
 
@@ -220,6 +224,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")

@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from "./runtime/library.js";
+import * as runtime from './runtime/library.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -45,10 +45,10 @@ export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = "log" extends keyof ClientOptions ? ClientOptions["log"] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions["log"]> : never : never,
+  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
-  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>["other"] }
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
     /**
    * ##  Prisma Client ʲˢ
@@ -66,7 +66,7 @@ export class PrismaClient<
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
-  $on<V extends U>(eventType: V, callback: (event: V extends "query" ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
    * Connect with the database
@@ -89,7 +89,7 @@ export class PrismaClient<
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
    * ```
-   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${"user@email.com"};`
+   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
@@ -101,7 +101,7 @@ export class PrismaClient<
    * Susceptible to SQL injections, see documentation.
    * @example
    * ```
-   * const result = await prisma.$executeRawUnsafe("UPDATE User SET cool = $1 WHERE email = $2 ;", true, "user@email.com")
+   * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
@@ -112,7 +112,7 @@ export class PrismaClient<
    * Performs a prepared raw query and returns the `SELECT` data.
    * @example
    * ```
-   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${"user@email.com"};`
+   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
@@ -124,7 +124,7 @@ export class PrismaClient<
    * Susceptible to SQL injections, see documentation.
    * @example
    * ```
-   * const result = await prisma.$queryRawUnsafe("SELECT * FROM User WHERE id = $1 OR email = $2;", 1, "user@email.com")
+   * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
@@ -137,9 +137,9 @@ export class PrismaClient<
    * @example
    * ```
    * const [george, bob, alice] = await prisma.$transaction([
-   *   prisma.user.create({ data: { name: "George" } }),
-   *   prisma.user.create({ data: { name: "Bob" } }),
-   *   prisma.user.create({ data: { name: "Alice" } }),
+   *   prisma.user.create({ data: { name: 'George' } }),
+   *   prisma.user.create({ data: { name: 'Bob' } }),
+   *   prisma.user.create({ data: { name: 'Alice' } }),
    * ])
    * ```
    * 
@@ -383,9 +383,9 @@ export namespace Prisma {
     [key in keyof T]: key extends keyof U ? T[key] : never
   } &
     (T extends SelectAndInclude
-      ? "Please either choose `select` or `include`."
+      ? 'Please either choose `select` or `include`.'
       : T extends SelectAndOmit
-        ? "Please either choose `select` or `omit`."
+        ? 'Please either choose `select` or `omit`.'
         : {})
 
   /**
@@ -427,7 +427,7 @@ export namespace Prisma {
 
 
   /**
-   * If it"s T[], return T
+   * If it's T[], return T
    */
   export type UnEnumerate<T extends unknown> = T extends Array<infer U> ? U : T
 
@@ -580,13 +580,13 @@ export namespace Prisma {
 
   type FieldPaths<
     T,
-    U = Omit<T, "_avg" | "_sum" | "_count" | "_min" | "_max">
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
   > = IsObject<T> extends True ? U : T
 
   type GetHavingFields<T> = {
     [K in keyof T]: Or<
-      Or<Extends<"OR", K>, Extends<"AND", K>>,
-      Extends<"NOT", K>
+      Or<Extends<'OR', K>, Extends<'AND', K>>,
+      Extends<'NOT', K>
     > extends True
       ? // infer is only needed to not hit TS limit
         // based on the brilliant idea of Pierre-Antoine Mills
@@ -623,9 +623,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Genre: "Genre",
-    language: "language",
-    Movie: "Movie"
+    Genre: 'Genre',
+    language: 'language',
+    Movie: 'Movie'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -636,7 +636,7 @@ export namespace Prisma {
   }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
-    returns: Prisma.TypeMap<this["params"]["extArgs"], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
+    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
   }
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
@@ -896,7 +896,7 @@ export namespace Prisma {
   }
   export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
   export type DefaultPrismaClient = PrismaClient
-  export type ErrorFormat = "pretty" | "colorless" | "minimal"
+  export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
     /**
      * Overwrites the datasource url from your schema.prisma file
@@ -914,14 +914,14 @@ export namespace Prisma {
      * @example
      * ```
      * // Defaults to stdout
-     * log: ["query", "info", "warn", "error"]
+     * log: ['query', 'info', 'warn', 'error']
      * 
      * // Emit as events
      * log: [
-     *   { emit: "stdout", level: "query" },
-     *   { emit: "stdout", level: "info" },
-     *   { emit: "stdout", level: "warn" }
-     *   { emit: "stdout", level: "error" }
+     *   { emit: 'stdout', level: 'query' },
+     *   { emit: 'stdout', level: 'info' },
+     *   { emit: 'stdout', level: 'warn' }
+     *   { emit: 'stdout', level: 'error' }
      * ]
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
@@ -960,13 +960,13 @@ export namespace Prisma {
   }
 
   /* Types for Logging */
-  export type LogLevel = "info" | "query" | "warn" | "error"
+  export type LogLevel = 'info' | 'query' | 'warn' | 'error'
   export type LogDefinition = {
     level: LogLevel
-    emit: "stdout" | "event"
+    emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T["emit"] extends "event" ? T["level"] : never : never
+  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
   export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
     GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
     : never
@@ -988,27 +988,27 @@ export namespace Prisma {
 
 
   export type PrismaAction =
-    | "findUnique"
-    | "findUniqueOrThrow"
-    | "findMany"
-    | "findFirst"
-    | "findFirstOrThrow"
-    | "create"
-    | "createMany"
-    | "createManyAndReturn"
-    | "update"
-    | "updateMany"
-    | "updateManyAndReturn"
-    | "upsert"
-    | "delete"
-    | "deleteMany"
-    | "executeRaw"
-    | "queryRaw"
-    | "aggregate"
-    | "count"
-    | "runCommandRaw"
-    | "findRaw"
-    | "groupBy"
+    | 'findUnique'
+    | 'findUniqueOrThrow'
+    | 'findMany'
+    | 'findFirst'
+    | 'findFirstOrThrow'
+    | 'create'
+    | 'createMany'
+    | 'createManyAndReturn'
+    | 'update'
+    | 'updateMany'
+    | 'updateManyAndReturn'
+    | 'upsert'
+    | 'delete'
+    | 'deleteMany'
+    | 'executeRaw'
+    | 'queryRaw'
+    | 'aggregate'
+    | 'count'
+    | 'runCommandRaw'
+    | 'findRaw'
+    | 'groupBy'
 
   /**
    * These options are being passed into the middleware as "params"
@@ -1235,7 +1235,7 @@ export namespace Prisma {
   }
 
   export type GetGenreAggregateType<T extends GenreAggregateArgs> = {
-        [P in keyof T & keyof AggregateGenre]: P extends "_count" | "count"
+        [P in keyof T & keyof AggregateGenre]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateGenre[P]>
@@ -1271,9 +1271,9 @@ export namespace Prisma {
 
   type GetGenreGroupByPayload<T extends GenreGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<GenreGroupByOutputType, T["by"]> &
+      PickEnumerable<GenreGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof GenreGroupByOutputType))]: P extends "_count"
+          [P in ((keyof T) & (keyof GenreGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
               : GetScalarType<T[P], GenreGroupByOutputType[P]>
@@ -1328,12 +1328,12 @@ export namespace Prisma {
   type GenreGetPayload<S extends boolean | null | undefined | GenreDefaultArgs> = $Result.GetResult<Prisma.$GenrePayload, S>
 
   type GenreCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<GenreFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+    Omit<GenreFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: GenreCountAggregateInputType | true
     }
 
   export interface GenreDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>["model"]["Genre"], meta: { name: "Genre" } }
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Genre'], meta: { name: 'Genre' } }
     /**
      * Find zero or one Genre that matches the filter.
      * @param {GenreFindUniqueArgs} args - Arguments to find a Genre
@@ -1348,7 +1348,7 @@ export namespace Prisma {
     findUnique<T extends GenreFindUniqueArgs>(args: SelectSubset<T, GenreFindUniqueArgs<ExtArgs>>): Prisma__GenreClient<$Result.GetResult<Prisma.$GenrePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Genre that matches the filter or throw an error with `error.code="P2025"`
+     * Find one Genre that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {GenreFindUniqueOrThrowArgs} args - Arguments to find a Genre
      * @example
@@ -1592,10 +1592,10 @@ export namespace Prisma {
     count<T extends GenreCountArgs>(
       args?: Subset<T, GenreCountArgs>,
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], GenreCountAggregateOutputType>
+          : GetScalarType<T['select'], GenreCountAggregateOutputType>
         : number
     >
 
@@ -1633,7 +1633,7 @@ export namespace Prisma {
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
-     *   by: ["city", "createdAt"],
+     *   by: ['city', 'createdAt'],
      *   orderBy: {
      *     createdAt: true
      *   },
@@ -1646,18 +1646,18 @@ export namespace Prisma {
     groupBy<
       T extends GenreGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: GenreGroupByArgs["orderBy"] }
-        : { orderBy?: GenreGroupByArgs["orderBy"] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T["orderBy"]>>>,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+        ? { orderBy: GenreGroupByArgs['orderBy'] }
+        : { orderBy?: GenreGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
       ? `Error: "by" must not be empty.`
       : HavingValid extends False
@@ -1668,13 +1668,13 @@ export namespace Prisma {
             ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
             : [
                 Error,
-                "Field ",
+                'Field ',
                 P,
                 ` in "having" needs to be provided in "by"`,
               ]
         }[HavingFields]
-      : "take" extends Keys<T>
-      ? "orderBy" extends Keys<T>
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
         ? ByValid extends True
           ? {}
           : {
@@ -1682,9 +1682,9 @@ export namespace Prisma {
                 ? never
                 : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
             }[OrderFields]
-        : "Error: If you provide "take", you also need to provide "orderBy""
-      : "skip" extends Keys<T>
-      ? "orderBy" extends Keys<T>
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
         ? ByValid extends True
           ? {}
           : {
@@ -1692,7 +1692,7 @@ export namespace Prisma {
                 ? never
                 : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
             }[OrderFields]
-        : "Error: If you provide "skip", you also need to provide "orderBy""
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
       : ByValid extends True
       ? {}
       : {
@@ -1745,8 +1745,8 @@ export namespace Prisma {
    * Fields of the Genre model
    */
   interface GenreFieldRefs {
-    readonly id: FieldRef<"Genre", "Int">
-    readonly name: FieldRef<"Genre", "String">
+    readonly id: FieldRef<"Genre", 'Int'>
+    readonly name: FieldRef<"Genre", 'String'>
   }
     
 
@@ -2089,7 +2089,7 @@ export namespace Prisma {
      */
     where: GenreWhereUniqueInput
     /**
-     * In case the Genre found by the `where` argument doesn"t exist, create a new Genre with this data.
+     * In case the Genre found by the `where` argument doesn't exist, create a new Genre with this data.
      */
     create: XOR<GenreCreateInput, GenreUncheckedCreateInput>
     /**
@@ -2300,7 +2300,7 @@ export namespace Prisma {
   }
 
   export type GetLanguageAggregateType<T extends LanguageAggregateArgs> = {
-        [P in keyof T & keyof AggregateLanguage]: P extends "_count" | "count"
+        [P in keyof T & keyof AggregateLanguage]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateLanguage[P]>
@@ -2336,9 +2336,9 @@ export namespace Prisma {
 
   type GetLanguageGroupByPayload<T extends languageGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<LanguageGroupByOutputType, T["by"]> &
+      PickEnumerable<LanguageGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof LanguageGroupByOutputType))]: P extends "_count"
+          [P in ((keyof T) & (keyof LanguageGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
               : GetScalarType<T[P], LanguageGroupByOutputType[P]>
@@ -2393,12 +2393,12 @@ export namespace Prisma {
   type languageGetPayload<S extends boolean | null | undefined | languageDefaultArgs> = $Result.GetResult<Prisma.$languagePayload, S>
 
   type languageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<languageFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+    Omit<languageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: LanguageCountAggregateInputType | true
     }
 
   export interface languageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>["model"]["language"], meta: { name: "language" } }
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['language'], meta: { name: 'language' } }
     /**
      * Find zero or one Language that matches the filter.
      * @param {languageFindUniqueArgs} args - Arguments to find a Language
@@ -2413,7 +2413,7 @@ export namespace Prisma {
     findUnique<T extends languageFindUniqueArgs>(args: SelectSubset<T, languageFindUniqueArgs<ExtArgs>>): Prisma__languageClient<$Result.GetResult<Prisma.$languagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Language that matches the filter or throw an error with `error.code="P2025"`
+     * Find one Language that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {languageFindUniqueOrThrowArgs} args - Arguments to find a Language
      * @example
@@ -2657,10 +2657,10 @@ export namespace Prisma {
     count<T extends languageCountArgs>(
       args?: Subset<T, languageCountArgs>,
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], LanguageCountAggregateOutputType>
+          : GetScalarType<T['select'], LanguageCountAggregateOutputType>
         : number
     >
 
@@ -2698,7 +2698,7 @@ export namespace Prisma {
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
-     *   by: ["city", "createdAt"],
+     *   by: ['city', 'createdAt'],
      *   orderBy: {
      *     createdAt: true
      *   },
@@ -2711,18 +2711,18 @@ export namespace Prisma {
     groupBy<
       T extends languageGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: languageGroupByArgs["orderBy"] }
-        : { orderBy?: languageGroupByArgs["orderBy"] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T["orderBy"]>>>,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+        ? { orderBy: languageGroupByArgs['orderBy'] }
+        : { orderBy?: languageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
       ? `Error: "by" must not be empty.`
       : HavingValid extends False
@@ -2733,13 +2733,13 @@ export namespace Prisma {
             ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
             : [
                 Error,
-                "Field ",
+                'Field ',
                 P,
                 ` in "having" needs to be provided in "by"`,
               ]
         }[HavingFields]
-      : "take" extends Keys<T>
-      ? "orderBy" extends Keys<T>
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
         ? ByValid extends True
           ? {}
           : {
@@ -2747,9 +2747,9 @@ export namespace Prisma {
                 ? never
                 : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
             }[OrderFields]
-        : "Error: If you provide "take", you also need to provide "orderBy""
-      : "skip" extends Keys<T>
-      ? "orderBy" extends Keys<T>
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
         ? ByValid extends True
           ? {}
           : {
@@ -2757,7 +2757,7 @@ export namespace Prisma {
                 ? never
                 : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
             }[OrderFields]
-        : "Error: If you provide "skip", you also need to provide "orderBy""
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
       : ByValid extends True
       ? {}
       : {
@@ -2810,8 +2810,8 @@ export namespace Prisma {
    * Fields of the language model
    */
   interface languageFieldRefs {
-    readonly id: FieldRef<"language", "Int">
-    readonly name: FieldRef<"language", "String">
+    readonly id: FieldRef<"language", 'Int'>
+    readonly name: FieldRef<"language", 'String'>
   }
     
 
@@ -3154,7 +3154,7 @@ export namespace Prisma {
      */
     where: languageWhereUniqueInput
     /**
-     * In case the language found by the `where` argument doesn"t exist, create a new language with this data.
+     * In case the language found by the `where` argument doesn't exist, create a new language with this data.
      */
     create: XOR<languageCreateInput, languageUncheckedCreateInput>
     /**
@@ -3401,7 +3401,7 @@ export namespace Prisma {
   }
 
   export type GetMovieAggregateType<T extends MovieAggregateArgs> = {
-        [P in keyof T & keyof AggregateMovie]: P extends "_count" | "count"
+        [P in keyof T & keyof AggregateMovie]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateMovie[P]>
@@ -3441,9 +3441,9 @@ export namespace Prisma {
 
   type GetMovieGroupByPayload<T extends MovieGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MovieGroupByOutputType, T["by"]> &
+      PickEnumerable<MovieGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof MovieGroupByOutputType))]: P extends "_count"
+          [P in ((keyof T) & (keyof MovieGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
               : GetScalarType<T[P], MovieGroupByOutputType[P]>
@@ -3529,12 +3529,12 @@ export namespace Prisma {
   type MovieGetPayload<S extends boolean | null | undefined | MovieDefaultArgs> = $Result.GetResult<Prisma.$MoviePayload, S>
 
   type MovieCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MovieFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+    Omit<MovieFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: MovieCountAggregateInputType | true
     }
 
   export interface MovieDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>["model"]["Movie"], meta: { name: "Movie" } }
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Movie'], meta: { name: 'Movie' } }
     /**
      * Find zero or one Movie that matches the filter.
      * @param {MovieFindUniqueArgs} args - Arguments to find a Movie
@@ -3549,7 +3549,7 @@ export namespace Prisma {
     findUnique<T extends MovieFindUniqueArgs>(args: SelectSubset<T, MovieFindUniqueArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Movie that matches the filter or throw an error with `error.code="P2025"`
+     * Find one Movie that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {MovieFindUniqueOrThrowArgs} args - Arguments to find a Movie
      * @example
@@ -3793,10 +3793,10 @@ export namespace Prisma {
     count<T extends MovieCountArgs>(
       args?: Subset<T, MovieCountArgs>,
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], MovieCountAggregateOutputType>
+          : GetScalarType<T['select'], MovieCountAggregateOutputType>
         : number
     >
 
@@ -3834,7 +3834,7 @@ export namespace Prisma {
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
-     *   by: ["city", "createdAt"],
+     *   by: ['city', 'createdAt'],
      *   orderBy: {
      *     createdAt: true
      *   },
@@ -3847,18 +3847,18 @@ export namespace Prisma {
     groupBy<
       T extends MovieGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MovieGroupByArgs["orderBy"] }
-        : { orderBy?: MovieGroupByArgs["orderBy"] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T["orderBy"]>>>,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+        ? { orderBy: MovieGroupByArgs['orderBy'] }
+        : { orderBy?: MovieGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
       ? `Error: "by" must not be empty.`
       : HavingValid extends False
@@ -3869,13 +3869,13 @@ export namespace Prisma {
             ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
             : [
                 Error,
-                "Field ",
+                'Field ',
                 P,
                 ` in "having" needs to be provided in "by"`,
               ]
         }[HavingFields]
-      : "take" extends Keys<T>
-      ? "orderBy" extends Keys<T>
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
         ? ByValid extends True
           ? {}
           : {
@@ -3883,9 +3883,9 @@ export namespace Prisma {
                 ? never
                 : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
             }[OrderFields]
-        : "Error: If you provide "take", you also need to provide "orderBy""
-      : "skip" extends Keys<T>
-      ? "orderBy" extends Keys<T>
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
         ? ByValid extends True
           ? {}
           : {
@@ -3893,7 +3893,7 @@ export namespace Prisma {
                 ? never
                 : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
             }[OrderFields]
-        : "Error: If you provide "skip", you also need to provide "orderBy""
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
       : ByValid extends True
       ? {}
       : {
@@ -3947,12 +3947,12 @@ export namespace Prisma {
    * Fields of the Movie model
    */
   interface MovieFieldRefs {
-    readonly id: FieldRef<"Movie", "Int">
-    readonly title: FieldRef<"Movie", "String">
-    readonly release_date: FieldRef<"Movie", "DateTime">
-    readonly genre_id: FieldRef<"Movie", "Int">
-    readonly language_id: FieldRef<"Movie", "Int">
-    readonly oscar_count: FieldRef<"Movie", "Int">
+    readonly id: FieldRef<"Movie", 'Int'>
+    readonly title: FieldRef<"Movie", 'String'>
+    readonly release_date: FieldRef<"Movie", 'DateTime'>
+    readonly genre_id: FieldRef<"Movie", 'Int'>
+    readonly language_id: FieldRef<"Movie", 'Int'>
+    readonly oscar_count: FieldRef<"Movie", 'Int'>
   }
     
 
@@ -4303,7 +4303,7 @@ export namespace Prisma {
      */
     where: MovieWhereUniqueInput
     /**
-     * In case the Movie found by the `where` argument doesn"t exist, create a new Movie with this data.
+     * In case the Movie found by the `where` argument doesn't exist, create a new Movie with this data.
      */
     create: XOR<MovieCreateInput, MovieUncheckedCreateInput>
     /**
@@ -4410,62 +4410,62 @@ export namespace Prisma {
    */
 
   export const TransactionIsolationLevel: {
-    ReadUncommitted: "ReadUncommitted",
-    ReadCommitted: "ReadCommitted",
-    RepeatableRead: "RepeatableRead",
-    Serializable: "Serializable"
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
+    Serializable: 'Serializable'
   };
 
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
   export const GenreScalarFieldEnum: {
-    id: "id",
-    name: "name"
+    id: 'id',
+    name: 'name'
   };
 
   export type GenreScalarFieldEnum = (typeof GenreScalarFieldEnum)[keyof typeof GenreScalarFieldEnum]
 
 
   export const LanguageScalarFieldEnum: {
-    id: "id",
-    name: "name"
+    id: 'id',
+    name: 'name'
   };
 
   export type LanguageScalarFieldEnum = (typeof LanguageScalarFieldEnum)[keyof typeof LanguageScalarFieldEnum]
 
 
   export const MovieScalarFieldEnum: {
-    id: "id",
-    title: "title",
-    release_date: "release_date",
-    genre_id: "genre_id",
-    language_id: "language_id",
-    oscar_count: "oscar_count"
+    id: 'id',
+    title: 'title',
+    release_date: 'release_date',
+    genre_id: 'genre_id',
+    language_id: 'language_id',
+    oscar_count: 'oscar_count'
   };
 
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
 
 
   export const SortOrder: {
-    asc: "asc",
-    desc: "desc"
+    asc: 'asc',
+    desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
   export const QueryMode: {
-    default: "default",
-    insensitive: "insensitive"
+    default: 'default',
+    insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   export const NullsOrder: {
-    first: "first",
-    last: "last"
+    first: 'first',
+    last: 'last'
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
@@ -4477,58 +4477,58 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type "Int"
+   * Reference to a field of type 'Int'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "Int">
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
   /**
-   * Reference to a field of type "Int[]"
+   * Reference to a field of type 'Int[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "Int[]">
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
   /**
-   * Reference to a field of type "String"
+   * Reference to a field of type 'String'
    */
-  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "String">
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
     
 
 
   /**
-   * Reference to a field of type "String[]"
+   * Reference to a field of type 'String[]'
    */
-  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "String[]">
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
   /**
-   * Reference to a field of type "DateTime"
+   * Reference to a field of type 'DateTime'
    */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "DateTime">
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
   /**
-   * Reference to a field of type "DateTime[]"
+   * Reference to a field of type 'DateTime[]'
    */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "DateTime[]">
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
   /**
-   * Reference to a field of type "Float"
+   * Reference to a field of type 'Float'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "Float">
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
   /**
-   * Reference to a field of type "Float[]"
+   * Reference to a field of type 'Float[]'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, "Float[]">
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
