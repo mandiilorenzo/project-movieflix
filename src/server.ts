@@ -113,7 +113,7 @@ app.get("/movies/:genreName", async (req, res) => {
 
     try {
         const moviesFilteredByGenre = await prisma.movie.findMany({
-            include: { 
+            include: {
                 genres: true,
                 languages: true
             },
@@ -129,13 +129,76 @@ app.get("/movies/:genreName", async (req, res) => {
 
         if (moviesFilteredByGenre.length === 0) {
             res.status(404).send({ message: "Nenhum filme encontrado para esse gênero" });
-        } 
+        }
 
         res.status(200).json(moviesFilteredByGenre);
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: "Falha ao buscar filmes por gênero" });
     }
+});
+
+app.put("/genres/:id", async (req, res) => {
+    const id = Number(req.params.id);
+
+    try {
+        const genre = await prisma.genre.findUnique({
+            where: {
+                id
+            }
+        });
+        if (!genre) {
+            res.status(404).send({ message: "Gênero não encontrado" });
+        }
+
+        const data = { ...req.body };
+
+        await prisma.genre.update({
+            where: {
+                id
+            },
+            data: data
+        });
+    } catch (error) {
+        res.status(500).send({ message: "Falha ao atualizar o gênero" });
+        console.log(error);
+    }
+
+    res.status(200).send();
+});
+
+app.post("/genres", async (req, res) => {
+    const { name } = req.body;
+
+    try {
+        const genreWithSameName = await prisma.genre.findFirst({
+            where: { name: { equals: name, mode: "insensitive" } }
+        });
+        if (genreWithSameName) {
+            res.status(409).send({ message: "Gênero já cadastrado" });
+        }
+
+        await prisma.genre.create({
+            data: {
+                name
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: "Falha ao cadastrar um gênero" });
+    }
+
+    res.status(200).send();
+});
+
+app.get("/genres", async (_, res) => {
+    const genres = await prisma.genre.findMany({
+        orderBy: {
+            name: "asc",
+        }
+    });
+
+    res.json(genres);
 });
 
 
