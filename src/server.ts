@@ -11,6 +11,7 @@ app.use(express.json());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/movies", async (_, res) => {
+    const totalMovies = await prisma.movie.count();
     const movies = await prisma.movie.findMany({
         orderBy: {
             title: "asc",
@@ -21,7 +22,7 @@ app.get("/movies", async (_, res) => {
         }
     });
 
-    res.json(movies);
+    res.json({ totalMovies, movies });
 });
 
 app.post("/movies", async (req, res) => {
