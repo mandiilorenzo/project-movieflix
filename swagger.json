@@ -83,13 +83,13 @@
                 },
                 "responses": {
                     "200": {
-                        "$ref": "Filme atualizado com sucesso!"
+                        "description": "Filme atualizado com sucesso!"
                     },
                     "404": {
-                        "$ref": "Filme não encontrado"
+                        "description": "Filme não encontrado"
                     },
                     "505": {
-                        "$ref": "Falha ao atualizar o filme"
+                        "description": "Falha ao atualizar o filme"
                     }
                 }
             },
@@ -113,10 +113,10 @@
                         "description": "Filme deletado com sucesso"
                     },
                     "404": {
-                        "$ref": "Filme não encontrado"
+                        "description": "Filme não encontrado"
                     },
                     "505": {
-                        "$ref": "Falha ao deletar o filme"
+                        "description": "Falha ao deletar o filme"
                     }
                 }
             }
@@ -149,7 +149,7 @@
                         }
                     },
                     "500": {
-                        "$ref": "Falha ao filtrar filmes por gênero"
+                        "description": "Falha ao filtrar filmes por gênero"
                     }
                 }
             }
