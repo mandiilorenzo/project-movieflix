@@ -54,7 +54,7 @@ app.put("/movies/:id", async (req, res) => {
     const id = Number(req.params.id);
 
     try {
-        const movie= await prisma.movie.findUnique({
+        const movie = await prisma.movie.findUnique({
             where: {
                 id
             }
@@ -74,6 +74,32 @@ app.put("/movies/:id", async (req, res) => {
         });
     } catch (error) {
         res.status(500).send({ message: "Failed to update movie" });
+        console.log(error);
+    }
+
+    res.status(200).send();
+});
+
+app.delete("/movies/:id", async (req, res) => {
+    const id = Number(req.params.id);
+
+    try {
+        const movie = await prisma.movie.findUnique({
+            where: {
+                id
+            }
+        });
+        if (!movie) {
+            res.status(404).send({ message: "Movie not found" });
+        }
+
+        await prisma.movie.delete({
+            where: {
+                id
+            }
+        });
+    } catch (error) {
+        res.status(500).send({ message: "Failed to delete movie" });
         console.log(error);
     }
 
