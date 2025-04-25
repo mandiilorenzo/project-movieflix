@@ -25,6 +25,13 @@ app.post("/movies", async (req, res) => {
     const { title, release_date, genre_id, language_id, oscar_count, duration } = req.body;
 
     try {
+        const movieWithSameTitle = await prisma.movie.findFirst({
+            where: { title: { equals: title, mode: "insensitive"} }
+        });
+        if (movieWithSameTitle) {
+            res.status(409).send({ message: "Movie with this title already exists" });
+        }
+
         await prisma.movie.create({
             data: {
                 title,
