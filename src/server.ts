@@ -3,6 +3,7 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import swaggerUI from "swagger-ui-express";
 import swaggerDocument from "../swagger.json";
+import "dotenv/config";
 
 const port = 3000;
 const app = express();
@@ -91,21 +92,34 @@ app.put("/movies/:id", async (req, res) => {
             res.status(404).send({ message: "Movie not found" });
         }
 
-        const data = { ...req.body };
-        data.release_date = data.release_date ? new Date(data.release_date) : undefined;
+        const {
+            title,
+            release_date,
+            genre_id,
+            language_id,
+            oscar_count,
+            duration,
+        } = req.body;
 
-        await prisma.movie.update({
+        const updateMovie = await prisma.movie.update({
             where: {
                 id
             },
-            data: data
+            data: {
+                title,
+                release_date: release_date ? new Date(release_date) : undefined,
+                genre_id,
+                language_id,
+                oscar_count,
+                duration,
+            },
         });
+
+        res.status(200).json(updateMovie);
     } catch (error) {
         res.status(500).send({ message: "Failed to update movie" });
         console.log(error);
     }
-
-    res.status(200).send();
 });
 
 app.delete("/movies/:id", async (req, res) => {
