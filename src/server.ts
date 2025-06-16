@@ -71,12 +71,12 @@ app.post("/movies", async (req, res) => {
                 duration
             }
         });
+        res.status(201).send();
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: "Failed to create movie" });
     }
 
-    res.status(201).send();
 });
 
 app.put("/movies/:id", async (req, res) => {
@@ -100,6 +100,7 @@ app.put("/movies/:id", async (req, res) => {
             oscar_count,
             duration,
         } = req.body;
+        console.log(req.body);
 
         const updateMovie = await prisma.movie.update({
             where: {
