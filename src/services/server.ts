@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import swaggerUI from "swagger-ui-express";
-import swaggerDocument from "../swagger.json";
+import swaggerDocument from "../../swagger.json";
+import authRoutes from "../routes/auth.route";
+
 import "dotenv/config";
 
 const port = 3000;
@@ -178,6 +180,8 @@ app.get("/movies/:genreName", async (req, res) => {
         res.status(500).send({ message: "Failed to search movies by genre" });
     }
 });
+
+app.use("/auth", authRoutes);
 
 
 app.listen(port, () => {
