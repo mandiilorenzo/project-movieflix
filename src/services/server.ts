@@ -5,6 +5,7 @@ import swaggerUI from "swagger-ui-express";
 import swaggerDocument from "../../swagger.json";
 import authRoutes from "../routes/auth.route";
 
+
 import "dotenv/config";
 
 const port = 3000;

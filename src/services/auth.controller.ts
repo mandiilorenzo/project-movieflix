@@ -35,25 +35,19 @@ export const loginUser = async (req: Request, res: Response) => {
 
     try {
         const user = await prisma.users.findUnique({ where: { email } });
+        if (!user) return res.status(404).json({ message: "Usuário não encontrado" });
 
-        if (!user) {
-            return res.status(404).json({ message: "Usuário não encontrado" });
-        }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
-            return res.status(401).json({ message: "Senha incorreta" });
-        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(401).json({ message: "Senha incorreta" });
 
         const token = jwt.sign(
             { userId: user.id, role: user.role },
-            process.env.JWT_SECRET || "default_secret", // use .env para isso
+            process.env.JWT_SECRET || "default_secret",
             { expiresIn: "1h" }
         );
 
-        res.status(200).json({ message: "Login bem-sucedido", token });
+        return res.status(200).json({ message: "Login bem-sucedido", token });
     } catch (error) {
-        res.status(500).json({ message: "Erro ao fazer login", error });
+        return res.status(500).json({ message: "Erro ao fazer login", error });
     }
 };

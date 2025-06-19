@@ -1,20 +1,27 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+interface JwtPayload {
+    id: number;
+    email: string;
+}
+
+export const authenticateToken = ( req: Request, res: Response, next: NextFunction ): void => {
     const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1]; // formato: "Bearer <token>"
+    const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-        return res.status(401).json({ message: "Token não fornecido" });
+        res.status(401).json({ message: "Token não fornecido" });
+        return;
     }
 
-    jwt.verify(token, process.env.JWT_SECRET || "default_secret", (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET as string, (err, user) => {
         if (err) {
-            return res.status(403).json({ message: "Token inválido" });
+            res.status(403).json({ message: "Token inválido" });
+            return;
         }
 
-        (req as any).user = user;
+        (req as Request & { user?: JwtPayload }).user = user as JwtPayload;
         next();
     });
 };
