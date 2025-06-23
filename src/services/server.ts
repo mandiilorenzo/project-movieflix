@@ -4,9 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import swaggerUI from "swagger-ui-express";
 import swaggerDocument from "../../swagger.json";
 import authRoutes from "../routes/auth.route";
-
-
 import "dotenv/config";
+import { authenticateToken } from "../middlewares/auth.middleware";
 
 const port = 3000;
 const app = express();
@@ -16,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.get("/movies", async (req, res) => {
+app.get("/movies", authenticateToken, async (req, res) => {
     const movies = await prisma.movie.findMany({
         orderBy: {
             title: "asc",
