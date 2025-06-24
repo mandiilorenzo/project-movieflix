@@ -6,6 +6,7 @@ import swaggerDocument from "../../swagger.json";
 import authRoutes from "../routes/auth.route";
 import "dotenv/config";
 import { authenticateToken } from "../middlewares/auth.middleware";
+import { authorizeRole } from "../middlewares/authRole.middleware";
 
 const port = 3000;
 const app = express();
@@ -125,7 +126,7 @@ app.put("/movies/:id", async (req, res) => {
     }
 });
 
-app.delete("/movies/:id", async (req, res) => {
+app.delete("/movies/:id", authorizeRole("ADMIN"),  async (req, res) => {
     const id = Number(req.params.id);
 
     try {

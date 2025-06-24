@@ -1,12 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { JwtPayload } from "jsonwebtoken";
 
-export const authorizeRole = (requiredRole: "ADMIN" | "USER") => {
-    return (req: Request, res: Response, next: NextFunction) => {
+export const authorizeRole = (requiredRole: string): RequestHandler => {
+    return (req: Request, res: Response, next: NextFunction): void => {
         const user = (req as Request & { user?: JwtPayload }).user;
 
         if (!user || user.role !== requiredRole) {
-            return res.status(403).json({ message: "Acesso negado: permissão insuficiente." });
+            res.status(403).json({ message: "Acesso negado: permissão insuficiente." });
+            return;
         }
 
         next();
