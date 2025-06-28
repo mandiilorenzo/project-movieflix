@@ -6,7 +6,7 @@ import swaggerDocument from "../../swagger.json";
 import authRoutes from "../routes/auth.route";
 import "dotenv/config";
 import { authenticateToken } from "../middlewares/auth.middleware";
-import { authorizeRole } from "../middlewares/authRole.middleware";
+
 
 const port = 3000;
 const app = express();
@@ -53,8 +53,10 @@ app.get("/movies/:id", async (req, res) => {
     }
 });
 
-app.post("/movies", async (req, res) => {
+app.post("/movies", authenticateToken, async (req, res) => {
     const { title, release_date, genre_id, language_id, oscar_count, duration } = req.body;
+    console.log("Usuário autenticado:", req.user); // 👈 pra debug
+
 
     try {
         const movieWithSameTitle = await prisma.movie.findFirst({
@@ -68,10 +70,13 @@ app.post("/movies", async (req, res) => {
             data: {
                 title,
                 release_date: new Date(release_date),
-                genre_id,
-                language_id,
+                genres: { connect: { id: genre_id } },
+                languages: { connect: { id: language_id } },
                 oscar_count,
-                duration
+                duration,
+                createdBy: {
+                    connect: { id: req.user.id }
+                }
             }
         });
         res.status(201).send();
@@ -126,7 +131,7 @@ app.put("/movies/:id", async (req, res) => {
     }
 });
 
-app.delete("/movies/:id", authorizeRole("ADMIN"),  async (req, res) => {
+app.delete("/movies/:id", async (req, res) => {
     const id = Number(req.params.id);
 
     try {
